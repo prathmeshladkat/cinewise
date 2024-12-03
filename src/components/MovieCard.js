@@ -40,13 +40,13 @@ const MovieCard = ({ posterPath, title, release_date, overview }) => {
                   className="w-full sm:w-40 h-auto rounded-lg shadow-md object-cover"
                 />
                 <div className="flex-1 space-y-2">
-                  <div className="flex items-center text-sm text-gray-600">
+                  <div className="flex items-center text-sm text-gray-400">
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     <p>Release Date: {release_date}</p>
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-gray-700">
+              <p className="mt-4 text-sm leading-relaxed text-gray-400">
                 {overview}
               </p>
             </div>

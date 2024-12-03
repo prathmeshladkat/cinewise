@@ -12,8 +12,8 @@ const MovieList = ({ title, movies }) => {
             <MovieCard
               key={movie.id}
               posterPath={movie.poster_path}
-              title={movie.title}
-              release_date={movie.release_date}
+              title={movie.original_name || movie.title}
+              release_date={movie.release_date || movie.first_air_date}
               overview={movie.overview}
             />
           ))}
