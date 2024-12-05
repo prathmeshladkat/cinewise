@@ -1,11 +1,12 @@
-/*import React, { useRef } from "react";
+import React, { useRef } from "react";
 import lang from "../utils/languageConstants.js";
 import { useDispatch, useSelector } from "react-redux";
 import openai from "../utils/openai.js";
 import { API_OPTIONS } from "../utils/constants.js";
 import { addGptMovieResult } from "../utils/gptSlice.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const GptSearchBar = () => {
+const GeminiSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
   const dispatch = useDispatch();
@@ -24,26 +25,23 @@ const GptSearchBar = () => {
   };
 
   const handleGptSearchClick = async () => {
-    console.log(searchText.current.value);
-    //make an api call to GPT API and get results
+    const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const gptQuery =
       "Act as a movie Recommedation system and suggest some movies for the query : " +
       searchText.current.value +
       ". only give me name of top rated 5 movies, comma seprated like the example result given ahead. Example Results: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
 
-    const gptResults = await openai.chat.completions.create({
-      messages: [{ role: "user", content: gptQuery }],
-      model: "gpt-3.5-turbo",
-    });
+    const gptResults = await model.generateContent(gptQuery);
+    //console.log(gptResults.response.text());
 
-    if (!gptResults.choices) {
-      // TODO: Write Error Handling
-    }
+    const gptValues = Object.values(gptResults);
 
-    console.log(gptResults.choices?.message);
+    console.log(gptValues[0].candidates[0].content.parts[0].text);
 
-    const gptMovies = gptResults.choices?.message?.content.split(",");
+    const gptMovies =
+      gptValues[0]?.candidates[0]?.content?.parts[0]?.text.split(",");
 
     const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
 
@@ -79,4 +77,4 @@ const GptSearchBar = () => {
   );
 };
 
-export default GptSearchBar;*/
+export default GeminiSearchBar;

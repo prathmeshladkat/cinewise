@@ -1,4 +1,5 @@
-import OpenAI from "openai";
+{
+  /*import OpenAI from "openai";
 import { OPENAI_KEY } from "./constants";
 
 const client = new OpenAI({
@@ -7,4 +8,5 @@ const client = new OpenAI({
   // This is the default and can be omitted
 });
 
-export default client;
+export default client;*/
+}
